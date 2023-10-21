@@ -23,11 +23,10 @@ class MainActivity : ComponentActivity() {
         setContent {
             Copa2022Theme {
                 val state by viewModel.state.collectAsState()
-                Log.e("TAG", "onCreate: ${state.matches}")
+                MainScreen(matches = state.matches)
             }
         }
     }
-
 }
 
 @Composable
