@@ -1,9 +1,9 @@
 # App Android Copa 2022
 
 Este projeto é um app com a temática da copa de mundo de 2022 e que permite enviar notificações para
-os usuários, como um lembrete para que os mesmos assistam os jogos. Além disso, o projeto foi
-iniciado a partir de um fork do repositório da Digital Innovation One e o desafio consiste em
-entender e adicionar algumas features, como:
+os usuários, como um lembrete para que os mesmos assistam os jogos. O projeto foi iniciado a 
+partir de um fork do repositório da Digital Innovation One e o desafio consiste em entender e 
+adicionar algumas features, como:
 
 1. :white_check_mark: Explorar o projeto base e entender seus módulos e responsabilidades:
     * **app**: Contém as classes de nível de aplicativo e scaffolding que vinculam o restante da
