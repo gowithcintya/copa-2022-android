@@ -29,16 +29,14 @@ class MainActivity : ComponentActivity() {
 
     private fun observeActions() {
         viewModel.action.observe(this) { action ->
-            when (action) {
-                is MainUiAction.MatchesNotFound -> TODO()
-                MainUiAction.Unexpected -> TODO()
+            when(action) {
                 is MainUiAction.DisableNotification ->
                     NotificationMatcherWorker.cancel(applicationContext, action.match)
                 is MainUiAction.EnableNotification ->
                     NotificationMatcherWorker.start(applicationContext, action.match)
+                is MainUiAction.MatchesNotFound -> {}
+                MainUiAction.Unexpected -> {}
             }
         }
     }
-
-
 }

@@ -1,6 +1,8 @@
 package me.dio.copa.catar.features
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,25 +25,38 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import me.dio.copa.catar.R
 import me.dio.copa.catar.domain.extensions.getDate
 import me.dio.copa.catar.domain.model.MatchDomain
 import me.dio.copa.catar.domain.model.TeamDomain
+import me.dio.copa.catar.ui.theme.Grey
 import me.dio.copa.catar.ui.theme.Shapes
+import me.dio.copa.catar.ui.theme.Tokens
 
 typealias NotificationOnClick = (match: MatchDomain) -> Unit
 
 @Composable
 fun MainScreen(matches: List<MatchDomain>, onNotificationClick: NotificationOnClick) {
+
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .padding(8.dp)
+            .background(color = Grey)
+            .padding(horizontal = Tokens.smallPadding, vertical = Tokens.defaultPadding)
     ) {
-        LazyColumn(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+        LazyColumn(verticalArrangement = Arrangement.spacedBy(Tokens.defaultPadding)) {
+            item {
+                Text(
+                    text = stringResource(R.string.world_cup_2022),
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.h6.copy(color = Color.White),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
+            }
             items(matches) { match ->
                 MatchInfo(match, onNotificationClick)
             }
@@ -53,17 +68,19 @@ fun MainScreen(matches: List<MatchDomain>, onNotificationClick: NotificationOnCl
 fun MatchInfo(match: MatchDomain, onNotificationClick: NotificationOnClick) {
     Card(
         shape = Shapes.large,
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier
+            .fillMaxWidth()
+            .border(width = Tokens.borderWidth, color = Color.Green, shape = Shapes.large)
     ) {
         Box {
             AsyncImage(
                 model = match.stadium.image,
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.height(160.dp)
+                modifier = Modifier.height(Tokens.imageHeight)
             )
 
-            Column(modifier = Modifier.padding(16.dp)) {
+            Column(modifier = Modifier.padding(Tokens.defaultPadding)) {
                 Notification(match, onNotificationClick)
                 Title(match)
                 Teams(match)
@@ -74,16 +91,19 @@ fun MatchInfo(match: MatchDomain, onNotificationClick: NotificationOnClick) {
 
 @Composable
 fun Notification(match: MatchDomain, onClick: NotificationOnClick) {
-    Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.End
+    ) {
         val drawable = if (match.notificationEnabled) R.drawable.ic_notifications_active
         else R.drawable.ic_notifications
 
         Image(
             painter = painterResource(id = drawable),
+            contentDescription = null,
             modifier = Modifier.clickable {
                 onClick(match)
-            },
-            contentDescription = null
+            }
         )
     }
 }
@@ -106,13 +126,13 @@ fun Teams(match: MatchDomain) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,
-        verticalAlignment = Alignment.CenterVertically,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         TeamItem(team = match.team1)
 
         Text(
-            text = "X",
-            modifier = Modifier.padding(end = 16.dp, start = 16.dp),
+            text = stringResource(R.string.teams_x),
+            modifier = Modifier.padding(end = Tokens.defaultPadding, start = Tokens.defaultPadding),
             style = MaterialTheme.typography.h6.copy(color = Color.White)
         )
 
@@ -129,7 +149,7 @@ fun TeamItem(team: TeamDomain) {
             style = MaterialTheme.typography.h3.copy(color = Color.White)
         )
 
-        Spacer(modifier = Modifier.size(16.dp))
+        Spacer(modifier = Modifier.size(Tokens.defaultPadding))
 
         Text(
             text = team.displayName,
